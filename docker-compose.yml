@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  dev:
+    image: node:slim
+    tty: true
+    environment:
+      NODE_ENV: development
+      PORT: 7000
+    ports:
+      - 7000:7000
+    volumes:
+      - .:/home/node/app
+    working_dir: /home/node/app
+    links:
+      - mongodb
+    command: npm run watch
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
