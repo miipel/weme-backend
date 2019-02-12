@@ -6,6 +6,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 
 const articlesRouter = require('./controllers/articles')
+const pageRouter = require('./controllers/pageRouting')
 const config = require('./utils/config')
 
 app.use(cors())
@@ -18,6 +19,7 @@ app.use(
 )
 
 app.use('/api/articles', articlesRouter)
+app.use('/', pageRouter)
 
 const server = http.createServer(app)
 
