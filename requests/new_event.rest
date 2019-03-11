@@ -1,0 +1,15 @@
+POST http://localhost:3001/api/events
+Content-Type: application/json
+
+{
+  "eventHeader": "Come play chess!",
+    "eventDescriptionShort": "Come play chess!",
+    "eventDescriptionLong": "Come play Chess!",
+    "hostName": "Some Guy",
+    "hostContactInfo": "unknown@fakemail.com",
+    "eventLocation": "Nowhereroad 1",
+    "startTime": "2019-01-01T10:00:00+02:00",
+    "activeUntil": "2019-01-01T12:00:00+02:00",
+    "minimumParticipants": 2,
+    "maximumParticipants": 4
+}
