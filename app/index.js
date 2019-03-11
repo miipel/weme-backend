@@ -7,10 +7,7 @@ const app = express()
 const UserModel = require('./models/user/userModel')
 
 mongoose
-  .connect(
-    process.env.MONGODB_URI,
-    { useNewUrlParser: true }
-  )
+  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then(() => {
     console.log('connected to database', process.env.MONGODB_URI)
   })
@@ -21,6 +18,14 @@ mongoose
 require('./auth/auth')
 
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  )
+  next()
+})
 app.use(bodyParser.json())
 logger.token('data', (req, res) => {
   return JSON.stringify(req.body)
