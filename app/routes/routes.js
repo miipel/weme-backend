@@ -3,6 +3,7 @@ const passport = require('passport')
 const jwt = require('jsonwebtoken')
 
 const Event = require('../models/event/eventModel')
+const Post = require('../models/trainingPost/postModel')
 
 const router = express.Router()
 
@@ -34,6 +35,49 @@ router.post('/login', async (req, res, next) => {
       return next(error)
     }
   })(req, res, next)
+})
+
+router.get('/api/posts', async (request, response) => {
+  const posts = await Post.find({})
+  response.json(posts)
+})
+
+router.get('/api/posts/:id', async (request, response) => {
+  Post.findById(request.params.id)
+    .then(post => {
+      if (post) {
+        response.json(post)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => {
+      response.status(400).send({ error: 'malformatted id' })
+    })
+})
+
+router.post('/api/posts', async (request, response) => {
+  try {
+    const body = request.body
+    if (body.tag === undefined) {
+      return response
+        .status(400)
+        .json({ error: 'Post parameters are incomplete' })
+    }
+    const post = new Post({
+      date: new Date(),
+      tag: body.tag,
+      header: body.header,
+      shortDescription: body.shortDescription,
+      content: body.content,
+    })
+
+    const savedPost = await post.save()
+    response.json(savedPost)
+  } catch (e) {
+    console.log(e)
+    response.status(500).json({ error: 'Post can not be added' })
+  }
 })
 
 router.get('/api/events', async (request, response) => {
@@ -84,7 +128,7 @@ router.put('/api/events/:id', (request, response) => {
     minimumParticipants: body.minimumParticipants,
     maximumParticipants: body.maximumParticipants,
   }
-  
+
   Event.findOneAndUpdate({ _id: request.params.id }, event)
     .then(newEvent => {
       response.json(newEvent)

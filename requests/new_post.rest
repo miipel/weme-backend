@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/posts
+Content-Type: application/json
+
+{
+  "date": "2019-01-01T10:00:00+02:00",
+  "tag": "professionals",
+  "header": "Training post 1 which has very long name for two lines of text",
+  "shortDescription": "We aim to improve the elders living quality and social satisfaction in Finland and China by proving a modular system.",
+  "content": "We aim to improve the elders living quality and social satisfaction in Finland and China by proving a modular system. We aim to improve the elders living quality and social satisfaction in Finland and China by proving a modular system. We aim to improve the elders living quality and social satisfaction in Finland and China by proving a modular system."
+}
